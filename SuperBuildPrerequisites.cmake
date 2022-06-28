@@ -22,12 +22,14 @@ if(DEFINED Slicer_SOURCE_DIR)
   # Extension is bundled in a custom application
   set(SlicerVirtualReality_EXTERNAL_PROJECT_DEPENDENCIES
     OpenVR
+    OpenXR
     )
 else()
   # Extension is build standalone against Slicer itself built
   # against VTK without the relevant modules enabled.
   set(SlicerVirtualReality_EXTERNAL_PROJECT_DEPENDENCIES
     vtkRenderingOpenVR
+    vtkRenderingOpenXR
     )
 endif()
 message(STATUS "SlicerVirtualReality_EXTERNAL_PROJECT_DEPENDENCIES:${SlicerVirtualReality_EXTERNAL_PROJECT_DEPENDENCIES}")
@@ -38,6 +40,7 @@ if(NOT DEFINED Slicer_SOURCE_DIR)
   # VTKExternalModule is required to configure these external projects:
   # - vtkRenderingVR
   # - vtkRenderingOpenVR
+  # - vtkRenderingOpenXR
   include(${SlicerVirtualReality_SOURCE_DIR}/FetchVTKExternalModule.cmake)
 
 else()
@@ -47,14 +50,17 @@ else()
   ExternalProject_Add_Dependencies(VTK
     DEPENDS
       OpenVR
+      OpenXR
     )
 
   # Additional external project options
   set(VTK_MODULE_ENABLE_VTK_RenderingOpenVR YES)
+  set(VTK_MODULE_ENABLE_VTK_RenderingOpenXR YES)
 
   mark_as_superbuild(
     VARS
       VTK_MODULE_ENABLE_VTK_RenderingOpenVR:STRING
+      VTK_MODULE_ENABLE_VTK_RenderingOpenXR:STRING
     PROJECTS
       VTK
     )
