@@ -58,6 +58,9 @@ if((NOT OpenXR_INCLUDE_DIR OR NOT OpenXR_LIBRARY) AND NOT ${CMAKE_PROJECT_NAME}_
       # Options
       -DDYNAMIC_LOADER:BOOL=ON
       -DBUILD_TESTS:BOOL=OFF
+
+      # Install directories
+      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
     DEPENDS
       ${${proj}_DEPENDENCIES}
     )
