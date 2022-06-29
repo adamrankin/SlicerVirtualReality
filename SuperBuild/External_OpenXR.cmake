@@ -70,6 +70,7 @@ if((NOT OpenXR_INCLUDE_DIR OR NOT OpenXR_LIBRARY) AND NOT ${CMAKE_PROJECT_NAME}_
     )
 
   set(OpenXR_DIR ${${proj}_INSTALL_DIR}/cmake)
+  mark_as_superbuild(OpenXR_DIR:FILEPATH)
   set(OpenXR_INCLUDE_DIR "${${proj}_INSTALL_DIR}/include/openxr")
   if(WIN32)
     set(OpenXR_LIBRARY "${${proj}_INSTALL_DIR}/lib/openxr_loader.lib")

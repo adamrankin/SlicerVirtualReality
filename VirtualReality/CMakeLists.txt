@@ -7,6 +7,7 @@ string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
 
 #-----------------------------------------------------------------------------
 find_package(vtkRenderingOpenVR REQUIRED)
+find_package(vtkRenderingOpenXR REQUIRED)
 
 #-----------------------------------------------------------------------------
 add_subdirectory(MRML)

@@ -62,13 +62,26 @@ add_subdirectory(VirtualReality)
 #-----------------------------------------------------------------------------
 set(SlicerVirtualReality_CUSTOM_CONFIG "####### Expanded from \@SlicerVirtualReality_CUSTOM_CONFIG\@ #######
 set(vtkRenderingOpenVR_DIR \"${vtkRenderingOpenVR_DIR}\")
+set(vtkRenderingOpenXR_DIR \"${vtkRenderingOpenXR_DIR}\")
 find_package(vtkRenderingOpenVR REQUIRED)
+find_package(vtkRenderingOpenXR REQUIRED)
+
 ##################################################
 ")
 include(${Slicer_EXTENSION_GENERATE_CONFIG})
 
 #-----------------------------------------------------------------------------
-# Install OpenVR
+# Install VR APIs
+
+# OpenXR
+find_package(OpenXR REQUIRED)
+get_target_property(_openxr_library OpenXR::openxr_loader IMPORTED_LOCATION_RELEASE)
+install(FILES ${_openxr_library}
+  DESTINATION ${Slicer_THIRDPARTY_LIB_DIR}
+  COMPONENT RuntimeLibraries
+  )
+
+# OpenVR
 set(_platform)
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   # ${OpenVR_LIBRARY} contains import library which does not have to be installed.
@@ -88,9 +101,11 @@ endif()
 set(EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS)
 list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${vtkRenderingVR_DIR};vtkRenderingVR;runtime;/")
 list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${vtkRenderingOpenVR_DIR};vtkRenderingOpenVR;runtime;/")
+list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${vtkRenderingOpenXR_DIR};vtkRenderingOpenXR;runtime;/")
 if(Slicer_USE_PYTHONQT)
   list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${vtkRenderingVR_DIR};vtkRenderingVR;python;/")
   list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${vtkRenderingOpenVR_DIR};vtkRenderingOpenVR;python;/")
+  list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${vtkRenderingOpenXR_DIR};vtkRenderingOpenXR;python;/")
 endif()
 set(${EXTENSION_NAME}_CPACK_INSTALL_CMAKE_PROJECTS "${EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS}" CACHE STRING "List of external projects to install" FORCE)
 

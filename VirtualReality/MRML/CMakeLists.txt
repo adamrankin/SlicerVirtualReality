@@ -26,6 +26,7 @@ set(${KIT}_TARGET_LIBRARIES
   ${VTK_LIBRARIES}
   ${MRML_LIBRARIES}
   VTK::RenderingOpenVR
+  VTK::RenderingOpenXR
   )
 
 #-----------------------------------------------------------------------------
